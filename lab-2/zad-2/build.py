@@ -13,8 +13,8 @@ default_task = ['analyze']
 def initialize(project):
     
     #Set source directory
-    project.set_property('dir_source_main_python', 'project_name')
-    project.set_property('dir_source_unittest_python', 'unittests')
+    project.set_property('dir_source_main_python', 'zad-2')
+    project.set_property('dir_source_unittest_python', 'tests')
     
     #install dependencies
     project.depends_on_requirements("requirements.txt")
