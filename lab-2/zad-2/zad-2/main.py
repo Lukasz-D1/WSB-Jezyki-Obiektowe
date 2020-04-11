@@ -8,11 +8,7 @@ def main():
     stack.push(2)
     stack.push(3)
 
-    print(stack.get_min_value())
-
-    while not stack.is_empty():
-        print(stack.top())
-        stack.pop()
+    print('Minimalna wartosc na stosie: {}'.format(stack.get_min_value()))
 
 
 if '__main__' == __name__:
