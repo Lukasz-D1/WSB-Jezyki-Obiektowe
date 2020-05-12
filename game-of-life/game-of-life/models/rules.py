@@ -17,45 +17,47 @@ class Rules(AbstractRules):
 
         if self._cell_x != 0:
             if self._cell_y != 0:
-                #print(self._cell_x - 1, self._cell_y - 1)
                 if self._board.matrix[self._cell_x - 1][self._cell_y - 1].is_alive:
                     cnt += 1
-            #print(self._cell_x - 1, self._cell_y)
             if self._board.matrix[self._cell_x - 1][self._cell_y].is_alive:
                 cnt += 1
-            if self._cell_y != 9:
-                #print(self._cell_x - 1, self._cell_y + 1)
+            if self._cell_y != len(self._board.matrix) - 1:
                 if self._board.matrix[self._cell_x - 1][self._cell_y + 1].is_alive:
                     cnt += 1
 
         if self._cell_y != 0:
-            #print(self._cell_x, self._cell_y - 1)
             if self._board.matrix[self._cell_x][self._cell_y - 1].is_alive:
                 cnt += 1
-        if self._cell_y != 9:
-            #print(self._cell_x, self._cell_y + 1)
+        if self._cell_y != len(self._board.matrix) - 1:
             if self._board.matrix[self._cell_x][self._cell_y + 1].is_alive:
                 cnt += 1
 
-        if self._cell_x != 9:
+        if self._cell_x != len(self._board.matrix) - 1:
             if self._cell_y != 0:
-                #print(self._cell_x + 1, self._cell_y - 1)
                 if self._board.matrix[self._cell_x + 1][self._cell_y - 1].is_alive:
                     cnt += 1
-            #print(self._cell_x + 1, self._cell_y)
             if self._board.matrix[self._cell_x + 1][self._cell_y].is_alive:
                 cnt += 1
-            if self._cell_y != 9:
-                #print(self._cell_x + 1, self._cell_y + 1)
+            if self._cell_y != len(self._board.matrix) - 1:
                 if self._board.matrix[self._cell_x + 1][self._cell_y + 1].is_alive:
                     cnt += 1
         if self._cell_x == 1 and self._cell_y == 1:
             print(cnt)
 
-        if cnt == 2 or cnt == 3:
-            self._board.matrix[self._cell_x][self._cell_y].is_alive = True
-            #print('Cell should be alive')
-        elif cnt > 2 or cnt < 3:
-            self._board.matrix[self._cell_x][self._cell_y].is_alive = False
-            #print('Cell should be dead')
+        if self._board.matrix[self._cell_x][self._cell_y].is_alive:
+            if (cnt < 2) or (cnt > 3):
+                self._board.matrix[self._cell_x][self._cell_y].is_alive = False
+        else:
+            if cnt == 3:
+                self._board.matrix[self._cell_x][self._cell_y].is_alive = True
+
+        # if not self._board.matrix[self._cell_x][self._cell_y].is_alive and cnt == 3:
+        #     self._board.matrix[self._cell_x][self._cell_y].is_alive = True
+        # elif self._board.matrix[self._cell_x][self._cell_y].is_alive and cnt == 2:
+        #     self._board.matrix[self._cell_x][self._cell_y].is_alive = True
+        # elif self._board.matrix[self._cell_x][self._cell_y].is_alive and cnt == 3:
+        #     self._board.matrix[self._cell_x][self._cell_y].is_alive = True
+        # else:
+        #     self._board.matrix[self._cell_x][self._cell_y].is_alive = False
+
 

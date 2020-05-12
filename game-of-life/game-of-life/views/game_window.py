@@ -3,14 +3,17 @@ import pygame
 
 class Visuals:
 
-    def __init__(self):
+    def __init__(self, size_of_cell):
         self._display_text = True
         self._set_bg = True
         self._screen = pygame.display.set_mode([500, 500])
-        self._title_font = pygame.font.SysFont("dejavuserif", 72)
-        self._msg_font = pygame.font.SysFont("dejavuserif", 32)
-        self._title = self._title_font.render("Game of Life", True, (255, 255, 255))
-        self._msg = self._msg_font.render("Press S to start", True, (255, 255, 255))
+        self._size_of_cell = size_of_cell
+        title_font = pygame.font.SysFont("dejavuserif", 72)
+        msg_font = pygame.font.SysFont("dejavuserif", 32)
+        controls_font = pygame.font.SysFont("dejavuserif", 24)
+        self._title = title_font.render("Game of Life", True, (255, 255, 255))
+        self._msg = msg_font.render("Press S to start", True, (255, 255, 255))
+        self._controls = controls_font.render("press 0 to pause | press 1 to resume", True, (255, 255, 255))
 
     @property
     def display_text(self):
@@ -36,8 +39,9 @@ class Visuals:
                     pygame.draw.rect(self._screen, (i * 10, j * 10, 255), (i * 50, j * 50, 50, 50))
 
         if self._display_text:
-            self._screen.blit(self._title, (250 - self._title.get_width() // 2, 250 - self._title.get_height() // 2))
-            self._screen.blit(self._msg, (250 - self._msg.get_width() // 2, 310 - self._msg.get_height() // 2))
+            self._screen.blit(self._title, (250 - self._title.get_width() / 2, 250 - self._title.get_height() // 2))
+            self._screen.blit(self._msg, (250 - self._msg.get_width() / 2, 310 - self._msg.get_height() // 2))
+            self._screen.blit(self._controls, (160 - self._msg.get_width() / 2, 410 - self._msg.get_height() // 2))
             pygame.display.flip()
 
         self._screen.fill((255, 255, 255))
@@ -46,7 +50,7 @@ class Visuals:
         color = (255, 255, 255)
         if alive:
             color = (0, 0, 0)
-        pygame.draw.rect(self._screen, color, (pos_y, pos_x, 50, 50))
+        pygame.draw.rect(self._screen, color, (pos_y, pos_x, self._size_of_cell, self._size_of_cell))
         pygame.display.update()
 
 

@@ -7,6 +7,7 @@ class AbstractCell(ABC):
         self._is_alive = False
         self._x = x
         self._y = y
+
         self._rules = Rules(self._x, self._y, board)
 
     @property

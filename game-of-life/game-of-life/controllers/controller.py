@@ -2,9 +2,11 @@ import pygame
 from models import Cell, Board
 from views import Visuals
 from itertools import chain
+from random import randint
 
-NUM_ROWS = 10
-NUM_COLS = 10
+NUM_ROWS = 100
+NUM_COLS = 100
+SIZE_OF_CELL = 5
 
 
 class Controller:
@@ -13,7 +15,7 @@ class Controller:
         self._running = True
         self._run_game = False
         self._gen = 0
-        self.vis = Visuals()
+        self.vis = Visuals(SIZE_OF_CELL)
         self.board = Board(NUM_ROWS, NUM_COLS)
 
     def app(self):
@@ -27,9 +29,14 @@ class Controller:
                         self.vis.set_bg = False
                         self.vis.game_running = True
                         self._run_game = True
+                        self.board.matrix[31][50].is_alive = True
+                        self.board.matrix[32][50].is_alive = True
+                        self.board.matrix[33][50].is_alive = True
+
                     if event.key == pygame.K_0:
                         self._run_game = False
-
+                    if event.key == pygame.K_1:
+                        self._run_game = True
                         # self.vis.draw_cell(0, 50, 1)
                         # self.vis.draw_cell(0, 100, 1)
                         # self.vis.draw_cell(0, 0, 1)
@@ -40,28 +47,35 @@ class Controller:
         pygame.quit()
 
     def game_of_life(self):
+
         if self._run_game:
-            self.board.matrix[int(100 / 50)][int(50 / 50)].is_alive = True
-            self.board.matrix[int(100 / 50)][int(100 / 50)].is_alive = True
-            self.board.matrix[int(150 / 50)][int(0 / 50)].is_alive = True
+            #entry_point = [randint(1, 3), randint(1, 3), randint(1, 3)]
+            # self.board.matrix[][].is_alive = True
+            # self.board.matrix[][].is_alive = True
+            # self.board.matrix[][].is_alive = True
+
+            # for i in range(400):
+            #     self.board.matrix[randint(0, 99)][randint(0, 99)].is_alive = True
+
+
+
 
             print("Generation: {}".format(self._gen))
             self._gen += 1
             for i in range(NUM_ROWS):
                 for j in range(NUM_COLS):
                     self.board.matrix[i][j].rules.check_neighbourhood()
-
                     if self.board.matrix[i][j].is_alive:
-                        print('here {} {}'.format(i * 50, j * 50))
-                        self.vis.draw_cell(i * 50, j * 50, 1)
+                        #print('here {} {}'.format(i * SIZE_OF_CELL, j * SIZE_OF_CELL))
+                        self.vis.draw_cell(i * SIZE_OF_CELL, j * SIZE_OF_CELL, 1)
                     else:
-                        self.vis.draw_cell(i * 50, j * 50, 0)
+                        self.vis.draw_cell(i * SIZE_OF_CELL, j * SIZE_OF_CELL, 0)
                     # print('Cell {} {} alive - {}'.format(self.board.matrix[i][j].x,
                     #                                     self.board.matrix[i][j].y,
                     #                                     self.board.matrix[i][j].is_alive))
                     # if i == 1 and j == 1:
                     #     self.board.matrix[i][j].rules.check_neighbourhood()
-                    pygame.time.wait(10)
+                    #pygame.time.wait(10)
 
 
 if __name__ == '__main__':
