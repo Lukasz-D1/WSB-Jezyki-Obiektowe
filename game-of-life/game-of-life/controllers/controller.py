@@ -1,12 +1,11 @@
 import pygame
-from models import Cell, Board, StaticRules
+from models import Board, StaticRules
 from views import Visuals
-from itertools import chain
 from random import randint
 
-NUM_ROWS = 50
-NUM_COLS = 50
-SIZE_OF_CELL = 10
+NUM_ROWS = 25
+NUM_COLS = 25
+SIZE_OF_CELL = 20
 
 
 class Controller:
@@ -30,6 +29,8 @@ class Controller:
                         self.vis.set_bg = False
                         self.vis.game_running = True
                         self._run_game = True
+
+                        # Entry point (glider):
                         self.board.matrix[0][0].is_alive = True
                         self.board.matrix[1][1].is_alive = True
                         self.board.matrix[1][2].is_alive = True
@@ -46,9 +47,7 @@ class Controller:
         pygame.quit()
 
     def game_of_life(self):
-
         if self._run_game:
-
             print("Generation: {}".format(self._gen))
             self._gen += 1
             for i in range(NUM_ROWS):

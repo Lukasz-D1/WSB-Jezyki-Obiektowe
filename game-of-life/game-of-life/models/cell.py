@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-#from .rules import Rules
 
 
 class AbstractCell(ABC):
@@ -53,7 +52,6 @@ class Cell:
         self._x = x
         self._y = y
         self._cnt = 0
-        #self._rules = Rules(self._x, self._y, board)
 
     @property
     def is_alive(self):
@@ -74,7 +72,7 @@ class Cell:
     @property
     def y(self):
         return self._y
-# tutaj bylo zle
+
     @y.setter
     def y(self, val):
         self._y = val
@@ -87,9 +85,6 @@ class Cell:
     def cnt(self, val):
         self._cnt = val
 
-    # @property
-    # def rules(self):
-    #     return self._rules
 
 if __name__ == '__main__':
     cl = Cell(3, 4)
