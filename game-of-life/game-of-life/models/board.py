@@ -8,3 +8,8 @@ class Board:
     @property
     def matrix(self):
         return self._matrix
+
+
+if __name__ == '__main__':
+    brd = Board(10, 10)
+    print(brd.matrix)

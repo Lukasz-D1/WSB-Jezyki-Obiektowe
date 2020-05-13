@@ -3,9 +3,9 @@ from models import Board, StaticRules
 from views import Visuals
 from random import randint
 
-NUM_ROWS = 25
-NUM_COLS = 25
-SIZE_OF_CELL = 20
+NUM_ROWS = 50       # 10 | 25 | 50
+NUM_COLS = 50       # 10 | 25 | 50
+SIZE_OF_CELL = 10   # 50 | 20 | 10
 
 
 class Controller:
@@ -18,7 +18,7 @@ class Controller:
         self.board = Board(NUM_ROWS, NUM_COLS)
         self.rules = StaticRules()
 
-    def app(self):
+    def app(self, entry_point):
         while self._running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -30,12 +30,17 @@ class Controller:
                         self.vis.game_running = True
                         self._run_game = True
 
-                        # Entry point (glider):
-                        self.board.matrix[0][0].is_alive = True
-                        self.board.matrix[1][1].is_alive = True
-                        self.board.matrix[1][2].is_alive = True
-                        self.board.matrix[2][0].is_alive = True
-                        self.board.matrix[2][1].is_alive = True
+                        if entry_point == 'glider':
+                            # Entry point (glider):
+                            self.board.matrix[0][0].is_alive = True
+                            self.board.matrix[1][1].is_alive = True
+                            self.board.matrix[1][2].is_alive = True
+                            self.board.matrix[2][0].is_alive = True
+                            self.board.matrix[2][1].is_alive = True
+                        else:
+                            # Entry point (random):
+                            for i in range(200):
+                                self.board.matrix[randint(0, 20)][randint(0, 20)].is_alive = True
                     if event.key == pygame.K_0:
                         self._run_game = False
                     if event.key == pygame.K_1:
@@ -52,7 +57,6 @@ class Controller:
             self._gen += 1
             for i in range(NUM_ROWS):
                 for j in range(NUM_COLS):
-                    #print(self.board.matrix[i][j].x, self.board.matrix[i][j].y, self.board.matrix[i][j].is_alive, self.board.matrix[i][j].cnt)
                     self.rules.check_neighbourhood(self.board, self.board.matrix[i][j].x, self.board.matrix[i][j].y)
                     if self.board.matrix[i][j].is_alive:
                         self.vis.draw_cell(i * SIZE_OF_CELL, j * SIZE_OF_CELL, 1)
@@ -65,4 +69,4 @@ class Controller:
 
 if __name__ == '__main__':
     ctr = Controller()
-    ctr.app()
+    ctr.app('glider')

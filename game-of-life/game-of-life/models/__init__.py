@@ -1,5 +1,5 @@
-from .cell import Cell, AbstractCell
-from .rules import Rules, AbstractRules, StaticRules
+from .cell import AbstractCell, Cell
+from .rules import AbstractRules, StaticRules
 from .board import Board
 
-__all__ = ['Cell', 'AbstractCell', 'Rules', 'AbstractRules', 'Board', 'StaticRules']
+__all__ = ['Cell', 'AbstractCell', 'AbstractRules', 'Board', 'StaticRules']
