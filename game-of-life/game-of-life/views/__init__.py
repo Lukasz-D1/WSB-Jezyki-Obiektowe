@@ -1,3 +1,4 @@
-from .game_window import Visuals
+from .pygamevisuals import PyGameVisuals
+from .abstract_visuals import AbstractVisuals
 
-__all__ = ['Visuals']
+__all__ = ['PyGameVisuals', 'AbstractVisuals']

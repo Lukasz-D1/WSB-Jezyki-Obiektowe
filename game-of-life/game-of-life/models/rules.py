@@ -1,12 +1,19 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class AbstractRules(ABC):
-    def __init__(self):
+    @staticmethod
+    @abstractmethod
+    def check_neighbourhood(*args, **kwargs):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def decide(*args, **kwargs):
         pass
 
 
-class StaticRules:
+class StaticRules(AbstractRules):
     @staticmethod
     def check_neighbourhood(board, i, j):
         cnt = 0

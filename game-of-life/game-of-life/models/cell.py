@@ -2,24 +2,9 @@ from abc import ABC
 
 
 class AbstractCell(ABC):
-    def __init__(self):
-        pass
-
-
-class Cell(AbstractCell):
     def __init__(self, x, y):
-        self._is_alive = False
         self._x = x
         self._y = y
-        self._cnt = 0
-
-    @property
-    def is_alive(self):
-        return self._is_alive
-
-    @is_alive.setter
-    def is_alive(self, val):
-        self._is_alive = val
 
     @property
     def x(self):
@@ -36,6 +21,21 @@ class Cell(AbstractCell):
     @y.setter
     def y(self, val):
         self._y = val
+
+
+class Cell(AbstractCell):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self._is_alive = False
+        self._cnt = 0
+
+    @property
+    def is_alive(self):
+        return self._is_alive
+
+    @is_alive.setter
+    def is_alive(self, val):
+        self._is_alive = val
 
     @property
     def cnt(self):

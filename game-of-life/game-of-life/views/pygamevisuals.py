@@ -1,11 +1,13 @@
 import pygame
+from .abstract_visuals import AbstractVisuals
 
 HEIGHT = 500
 WIDTH = 500
 
 
-class Visuals:
+class PyGameVisuals(AbstractVisuals):
     def __init__(self, size_of_cell):
+        super().__init__()
         self._display_text = True
         self._set_bg = True
 
@@ -36,6 +38,10 @@ class Visuals:
     def set_bg(self, val):
         self._set_bg = val
 
+    @property
+    def size_of_cell(self):
+        return self._size_of_cell
+
     def fill_screen(self):
         self._screen.fill((255, 255, 255))
         if self._set_bg:
@@ -51,7 +57,7 @@ class Visuals:
 
         self._screen.fill((255, 255, 255))
 
-    def draw_cell(self, pos_x, pos_y, alive):
+    def update(self, pos_x, pos_y, alive):
         color = (255, 255, 255)
         if alive:
             color = (0, 0, 0)
