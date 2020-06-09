@@ -1,5 +1,5 @@
 from django.contrib import admin
 from app.models import *
 
-admin.register(Ingredient)
-admin.register(Type)
+admin.site.register(Ingredient)
+admin.site.register(Type)
