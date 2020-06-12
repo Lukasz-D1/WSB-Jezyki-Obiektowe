@@ -1,0 +1,36 @@
+{% extends 'app/layout.html' %}
+
+{% block content %}
+<h3 class="display-4">Składnik: {{ object.name }}</h3>
+
+<hr>
+<div class="form-group">
+    <label for="typeArea">Typ</label>
+    <input type="text" class="form-control" id="typeArea" value="{{ object.type }}" readonly>
+</div>
+<div class="form-group">
+    <label for="descriptionArea">Description:</label>
+    <textarea class="form-control" id="descriptionArea" rows="2" readonly>{{ object.description }}</textarea>
+</div>
+<div class="form-group">
+    <label for="calorieArea">Kalorie</label>
+    <input type="text" class="form-control" id="calorieArea" value="{{ calories }}" readonly>
+</div>
+<div class="form-group">
+    <label for="fatsArea">Tluszcze</label>
+    <input type="text" class="form-control" id="fatsArea" value="{{ fats }}" readonly>
+</div>
+<div class="form-group">
+    <label for="proteinArea">Bialko</label>
+    <input type="text" class="form-control" id="proteinArea" value="{{ protein }}" readonly>
+</div>
+<div class="form-group">
+    <label for="carbsArea">Weglowodany</label>
+    <input type="text" class="form-control" id="carbsArea" value="{{ carbs }}" readonly>
+</div>
+<div class="form-group">
+    <label for="statusArea">Status</label>
+    <input type="text" class="form-control" id="statusArea" value="{{ object.status }}" readonly>
+</div>
+
+{% endblock %}

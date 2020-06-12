@@ -1,0 +1,26 @@
+{% extends 'app/layout.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+    {% if user.is_authenticated %}
+        <h1>
+            Ingredients
+        </h1>
+        <div class="text-justify">
+             Welcome to the website of the project created for the purpose of Object Language classes.
+             This project is a web application used to manage the culinary ingredients database.
+             Users with selected permissions have access to individual parts of the system. Administrators, of course
+             they have the highest level of preference.
+            <div class="text-center">
+                <a class="btn btn-success" href="{% url 'ingredient_add' %}">Create new Ingredient</a>
+            </div>
+        </div>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-info">Login</button>
+        </form>
+    {% endif %}
+{% endblock %}

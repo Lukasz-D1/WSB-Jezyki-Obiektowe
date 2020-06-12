@@ -1,0 +1,85 @@
+{% extends 'app/layout.html' %}
+
+{% block content %}
+    <h3 class="display-4">Types</h3>
+    <table class="table table-striped table-bordered mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id.</th>
+                <th>Name</th>
+                {% if perms.app.change_type %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for pos in object_list %}
+                <tr>
+                    <td>{{pos.id}}</td>
+                    <td>{{pos.name}}</td>
+
+                    {% if perms.app.change_type and perms.app.delete_type %}
+                    <td>
+                    <a href="{%url 'type_update' pos.id%}" class="btn btn-primary">Edit</a>
+                    <a href="#" data-url="{%url 'type_delete' pos.id%}"  class="btn btn-danger"
+                           data-toggle="modal" data-target="#deleteModal">Delete</a>
+                    </td>
+                    {% endif %}
+
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if perms.app.delete_type %}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" data-url="" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="save_button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script language="JavaScript">
+        function csrfSafeMethod(method) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                var csrftoken = Cookies.get('csrftoken');
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $("a[data-url]").each(function(_, element) {
+            element.onclick = function() {
+                var delete_url = this.getAttribute('data-url');
+                $("#deleteModal").data('url', delete_url);
+                $('#deleteModal').modal('show');
+            };
+        });
+
+        $("#save_button").click(function() {
+            var delete_url = $("#deleteModal").data('url');
+            $.post(delete_url).done(function() {
+                location.reload();
+            });
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'app/layout.html' %}
+
+{% block content %}
+    <h3 class="display-4">Nutrients</h3>
+    <table class="table table-striped table-bordered mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id.</th>
+                <th>Ingredient</th>
+                <th>Calories [per 100g]</th>
+                <th>Fats [per 100g]</th>
+                <th>Protein [per 100g]</th>
+                <th>Carbs [per 100g]</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pos in object_list %}
+                <tr>
+                    <td>{{pos.id}}</td>
+                    <td>{{pos.ingredient}}</td>
+                    <td>{{pos.calories_per_100g}}</td>
+                    <td>{{pos.fats_per_100g}}</td>
+                    <td>{{pos.protein_per_100g}}</td>
+                    <td>{{pos.carbs_per_100g}}</td>
+                    <td>
+                    {% if pos.author == user or user.get_username == 'admin' %}
+                    <a href="{%url 'nutrients_update' pos.id%}" class="btn btn-primary">Edit</a>
+                    {% endif %}
+                    {% if perms.app.delete_nutrients %}
+                    <a href="#" data-url="{%url 'nutrients_delete' pos.id%}" class="btn btn-danger"
+                           data-toggle="modal" data-target="#deleteModal">Delete</a>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if perms.app.delete_nutrients %}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" data-url="" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete nutrients</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="save_button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script language="JavaScript">
+        function csrfSafeMethod(method) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                var csrftoken = Cookies.get('csrftoken');
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $("a[data-url]").each(function(_, element) {
+            element.onclick = function() {
+                var delete_url = this.getAttribute('data-url');
+                $("#deleteModal").data('url', delete_url);
+                $('#deleteModal').modal('show');
+            };
+        });
+
+        $("#save_button").click(function() {
+            var delete_url = $("#deleteModal").data('url');
+            $.post(delete_url).done(function() {
+                location.reload();
+            });
+        })
+    </script>
+{% endblock %}
